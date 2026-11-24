@@ -1,0 +1,90 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+
+/*
+ * Mirrors the public site: parchment canvas, card-colored panels, ink type and a
+ * single clay accent. Filament derives the primary ramp from the panel config and
+ * picks AA-compliant button text by contrast ratio, so this file only handles the
+ * neutral surfaces, radii and typography that config cannot express.
+ */
+@theme {
+    --color-parchment: #f0eee6;
+    --color-card: #faf9f5;
+    --color-oat: #e3dacc;
+    --color-ink: #141413;
+    --color-ink-soft: #3d3d3a;
+    /* Muted text darkened to 4.78:1 on parchment for WCAG AA. */
+    --color-cloud-dark: #6b6862;
+    --color-stone: #cccbc8;
+    --color-clay: #d97757;
+}
+
+:root {
+    /* Editorial serif for body copy and long-form fields; sans for UI chrome. */
+    --font-family-serif: 'Source Serif 4', ui-serif, Georgia, Cambria, serif;
+}
+
+/*
+ * Surfaces. Filament paints panels white on a gray-50 canvas; the public site
+ * inverts that relationship — parchment canvas with card-toned panels.
+ * `!important` is needed because these utilities are emitted in a later layer.
+ */
+.fi-body {
+    background-color: var(--color-parchment) !important;
+}
+
+.fi-section:not(.fi-section-not-contained),
+.fi-ta-ctn,
+.fi-simple-main {
+    background-color: var(--color-card) !important;
+}
+
+.fi-sidebar,
+.fi-topbar {
+    background-color: var(--color-parchment) !important;
+    border-color: var(--color-stone) !important;
+}
+
+/* Card-level surfaces carry the 24px paper-stack radius from the design system. */
+.fi-section:not(.fi-section-not-contained),
+.fi-ta-ctn {
+    border-radius: 24px;
+    box-shadow: none;
+    border: 1px solid var(--color-stone);
+}
+
+.fi-input-wrp,
+.fi-select-input {
+    border-radius: 8px;
+}
+
+/*
+ * Typography. Headings are bold sans to match the landing page's hero; body copy
+ * and rich-text/markdown fields use the editorial serif.
+ */
+.fi-header-heading,
+.fi-simple-header-heading,
+.fi-section-header-heading,
+.fi-ta-header-heading {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+}
+
+.fi-header-subheading,
+.fi-simple-header-subheading {
+    font-family: var(--font-serif);
+    color: var(--color-cloud-dark);
+}
+
+/*
+ * The public site has no dark mode, so the panel should not offer one either —
+ * a half-themed dark mode would look worse than none. The theme switcher is
+ * hidden and the body is pinned light by the panel's darkMode(false).
+ */
+.fi-theme-switcher {
+    display: none;
+}

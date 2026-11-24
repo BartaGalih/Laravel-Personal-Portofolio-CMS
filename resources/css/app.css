@@ -1,0 +1,186 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Editorial voice: body copy, headlines, card titles. */
+    --font-serif: 'Source Serif 4', ui-serif, Georgia, Cambria, 'Times New Roman', serif;
+
+    /* Warm earth-tone palette — ivory, oat and a single clay accent. */
+    --color-parchment: #f0eee6;
+    --color-card: #faf9f5;
+    --color-manilla: #f5e3c7;
+    --color-oat: #e3dacc;
+    --color-stone: #cccbc8;
+    /* Muted text, darkened from the reference #b0aea5/#87867f: those measure
+       3.15:1 on parchment, below the 4.5:1 WCAG AA floor for body-size text. */
+    --color-cloud: #b0aea5;
+    --color-cloud-dark: #6b6862;
+    --color-ink: #141413;
+    --color-ink-soft: #3d3d3a;
+    --color-clay: #d97757;
+    --color-clay-deep: #c6613f;
+    /* Clay is too light for small text; this darker cut clears 5.1:1 on parchment. */
+    --color-clay-text: #a3492a;
+}
+
+/* Rendered Markdown. Kept hand-rolled instead of @tailwindcss/typography for one page type. */
+.prose {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    line-height: 1.55;
+}
+
+.prose > * + * {
+    margin-top: 1em;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+    font-weight: 600;
+    line-height: 1.2;
+    margin-top: 1.75em;
+    color: var(--color-ink);
+}
+
+.prose h1 {
+    font-size: 2.25rem;
+}
+
+.prose h2 {
+    font-size: 1.75rem;
+}
+
+.prose h3 {
+    font-size: 1.375rem;
+}
+
+/* Editorial convention: links are typeset with a persistent underline. */
+.prose a {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.prose ul,
+.prose ol {
+    padding-left: 1.5em;
+}
+
+.prose ul {
+    list-style: disc;
+}
+
+.prose ol {
+    list-style: decimal;
+}
+
+.prose li + li {
+    margin-top: 0.35em;
+}
+
+.prose blockquote {
+    border-left: 3px solid var(--color-stone);
+    padding-left: 1em;
+    color: var(--color-cloud-dark);
+    font-style: italic;
+}
+
+.prose code {
+    background: var(--color-oat);
+    border-radius: 0.25rem;
+    padding: 0.15em 0.35em;
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+}
+
+.prose pre {
+    background: var(--color-card);
+    border: 1px solid var(--color-stone);
+    border-radius: 0.5rem;
+    padding: 1em;
+    overflow-x: auto;
+}
+
+.prose pre code {
+    background: none;
+    padding: 0;
+}
+
+.prose img {
+    border-radius: 1.5rem;
+    max-width: 100%;
+}
+
+.prose hr {
+    border-color: var(--color-stone);
+}
+
+.prose table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+}
+
+.prose th,
+.prose td {
+    border: 1px solid var(--color-stone);
+    padding: 0.5em 0.75em;
+    text-align: left;
+}
+
+/*
+ * Filled button with the system's signature bottom-only radius — it reads like a
+ * card pulled from a stack rather than a pill.
+ */
+.btn-filled {
+    display: inline-block;
+    background: var(--color-ink);
+    color: var(--color-card);
+    /* Bottom-only radius: top corners stay sharp so it reads like a tab. */
+    border-radius: 0 0 8px 8px;
+    padding: 12px 31px;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 150ms ease;
+}
+
+.btn-filled:hover {
+    background: var(--color-ink-soft);
+}
+
+/* The single chromatic CTA on a page. Clay is reserved for this.
+   Ink on clay measures 5.9:1; white on clay is only 3.1:1 and fails AA. */
+.btn-clay {
+    display: inline-block;
+    background: var(--color-clay);
+    color: var(--color-ink);
+    border-radius: 0 0 8px 8px;
+    padding: 12px 31px;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 150ms ease;
+}
+
+.btn-clay:hover {
+    background: var(--color-clay-deep);
+}
+
+/* UI chrome: nav, labels, metadata. Never body copy. */
+.ui-label {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
