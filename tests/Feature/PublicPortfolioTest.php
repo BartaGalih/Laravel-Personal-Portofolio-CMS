@@ -28,6 +28,17 @@ test('the public layout loads the self-hosted fonts', function (): void {
         ->and($html)->not->toContain('fonts.googleapis.com');
 });
 
+test('public assets use the forwarded https scheme', function (): void {
+    $html = $this->withHeader('X-Forwarded-Proto', 'https')
+        ->get('/en')
+        ->assertSuccessful()
+        ->getContent();
+
+    expect($html)
+        ->toContain('https://localhost/build/')
+        ->not->toContain('http://localhost/build/');
+});
+
 test('all public pages render', function (string $path): void {
     $this->get($path)->assertSuccessful();
 })->with([
