@@ -4,9 +4,6 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
-    depends_on:
-      db:
-        condition: service_healthy
     expose:
       - "8080"
     environment:
@@ -18,11 +15,12 @@ services:
       APP_LOCALE: en
       APP_FALLBACK_LOCALE: en
 
+      # External PostgreSQL service managed by Dokploy
       DB_CONNECTION: pgsql
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_DATABASE: ${DB_DATABASE:-portfolio}
-      DB_USERNAME: ${DB_USERNAME:-portfolio}
+      DB_HOST: ${DB_HOST:-dbpg-rbnijk}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_DATABASE: ${DB_DATABASE:-personal-portofolio}
+      DB_USERNAME: ${DB_USERNAME:-postgres}
       DB_PASSWORD: ${DB_PASSWORD}
 
       FILESYSTEM_DISK: public
@@ -41,7 +39,6 @@ services:
       ADMIN_EMAIL: ${ADMIN_EMAIL}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
 
-      # serversideup/php automations (run on container start)
       AUTORUN_ENABLED: "true"
       AUTORUN_LARAVEL_MIGRATION: "true"
       AUTORUN_LARAVEL_MIGRATION_ISOLATION: "false"
@@ -53,22 +50,12 @@ services:
     volumes:
       # Uploaded media: must survive redeploys
       - uploads:/var/www/html/storage/app/public
-
-  db:
-    image: postgres:17-alpine
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: ${DB_DATABASE:-portfolio}
-      POSTGRES_USER: ${DB_USERNAME:-portfolio}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
+    networks:
+      - dokploy-network
 
 volumes:
   uploads:
-  pgdata:
+
+networks:
+  dokploy-network:
+    external: true
